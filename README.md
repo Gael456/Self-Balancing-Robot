@@ -31,9 +31,9 @@ Implemented in Arduino C/C++, this project has achieved the following:
  
 - Integrated an **MPU6050 IMU** with the Arduino over the **I2C bus**
 
-- Implemented a **PID-based control algorithm** to stabilize the platform
+- Implemented a **Proportional-based control algorithm** to stabilize the platform
    - Target setpoints are 0&deg; pitch and 0&deg; roll
-   - Separate PID controllers for pitch and roll with gains 'Kp', 'Ki', amd 'Kd'
+   - Separate proportional controllers for pitch and roll with gains 'Kp', 'Ki', amd 'Kd'
    - Include a small deadband around 0&deg; to reduce jitter and noise-induced motion
 
 - Integrated the complete system on a single prototype platform
