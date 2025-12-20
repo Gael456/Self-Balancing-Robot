@@ -21,7 +21,7 @@ By:
 ## Self Balancing Robot
 ![Robot Picture 1](./Images/self_leveling_robot.jpg)
 
-## Project Description
+## Background and Methodology
 
 Implemented in Arduino C/C++, this project has achieved the following:
 
