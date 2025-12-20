@@ -16,7 +16,7 @@ By:
 
 
 ## Video Demonstration
-- Demo: [Link](//www.youtube.com/shorts/pJ3YCWHPwqo)
+- Demo: [Link](https://www.youtube.com/shorts/pJ3YCWHPwqo)
 
 ## Self Balancing Robot
 ![Robot Picture 1](./Images/self_leveling_robot.jpg)
@@ -30,11 +30,21 @@ Implemented in Arduino C/C++, this project has achieved the following:
   - Top plate sized for a standard cup and mounted so the center of mass is near the middle of the platform
  
 - Integrated an **MPU6050 IMU** with the Arduino over the **I2C bus**
+  
+- Calibrates IMU offsets at startup (platform must be kept still during calibration)
 
-- Implemented a **Proportional-based control algorithm** to stabilize the platform
-   - Target setpoints are 0&deg; pitch and 0&deg; roll
-   - Separate proportional controllers for pitch and roll with gains 'Kp', 'Ki', amd 'Kd'
-   - Include a small deadband around 0&deg; to reduce jitter and noise-induced motion
+- IMU angles are read using mpu.getAngleX()/getAngleY() (AngleX → pitch, AngleY → roll)
+  - Uses a simple **low-pass filter** on the IMU angles to smooth measurements
+    - `angle_filt = angle_filt + α(angle_raw - angle_filt)`
+
+- Error is computed as: `error = setpoint - filtered_angle`
+  
+- Implemented a **Proportional control algorithm** to stabilize the platform
+   - Target setpoints are `0° pitch` and `0° roll`
+   - Two proportional controllers (pitch and roll): `u = Kp * error`
+   - Includes a small deadband around `0°` to reduce jitter and noise-induced motion
+   - Servo outputs are centered and constrained to safe limits to prevent over-rotation/binding
+   - Servo command per axis `Cmd = center + u`
 
 - Integrated the complete system on a single prototype platform
 
@@ -42,10 +52,10 @@ Implemented in Arduino C/C++, this project has achieved the following:
 ![ Block Diagram 1](./Images/SBRdiagram.png)
 
 ## Parts
-| Part | QTY | Manufactuer |
+| Part | QTY | Manufacturer |
 | --- | --- | --- |
 | Arduino Uno | 1 | Arduino |
-| MPU 6050 | 1 | Adafruit |
+| MPU6050 | 1 | Adafruit |
 | Servo Motor | 2 | N/A |
 | Pan-Tilt kit | 1 | N/A |
 
